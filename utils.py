@@ -51,7 +51,7 @@ class AiUtils(object):
         self.agent = _agent
 
     def get_account_id(self, public_key):
-        url = f"https://api.fastnear.com/v0/public_key/{public_key}"
+        url = f"https://test.api.fastnear.com/v0/public_key/{public_key}"
         response = requests.get(url)
         response.raise_for_status()
         content = response.json()
@@ -88,7 +88,7 @@ class AiUtils(object):
         return base58.b58encode(secret_key).decode()
 
     def get_account_fts(self, state, account_id):
-        url = f"https://api.fastnear.com/v1/account/{account_id}/ft"
+        url = f"https://test.api.fastnear.com/v1/account/{account_id}/ft"
         response = requests.get(url)
         response.raise_for_status()
         content = response.json()
@@ -127,7 +127,7 @@ class AiUtils(object):
         return markdown_list_str
 
     def get_account_nfts(self, state, account_id):
-        url = f"https://api.fastnear.com/v1/account/{account_id}/nft"
+        url = f"https://test.api.fastnear.com/v1/account/{account_id}/nft"
         response = requests.get(url)
         response.raise_for_status()
         content = response.json()
@@ -153,7 +153,7 @@ class AiUtils(object):
         return markdown_list_str
 
     def get_account_staking_pools(self, state, account_id):
-        url = f"https://api.fastnear.com/v1/account/{account_id}/staking"
+        url = f"https://test.api.fastnear.com/v1/account/{account_id}/staking"
         response = requests.get(url)
         response.raise_for_status()
         content = response.json()
@@ -221,7 +221,10 @@ class AiUtils(object):
 
     def get_all_tokens(self, state: State):
         if not state.all_available_tokens:
+            # Check if there's a testnet version of this API
             state.all_available_tokens = self.fetch_url("https://api.ref.finance/list-token-price")
+            # If there is a testnet version, use something like:
+            # state.all_available_tokens = self.fetch_url("https://testnet-api.ref.finance/list-token-price")
 
         return state.all_available_tokens
 
